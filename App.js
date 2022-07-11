@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
 import styles from './styles';
 
 const API_KEY = "";
@@ -55,8 +56,9 @@ export default function App() {
   return (
     <View style={styles.constainer}>
       <Text style={styles.label}>Address: {address}</Text>
-      <Text style={styles.label}>Latitude: {Latitude}</Text>
+      <Text style={styles.label}>Latitude: {latitude}</Text>
       <Text style={styles.label}>Longitude: {longitude}</Text>
+      <MapView style={styles.mapView} showsUserLocation followsUserLocation />
     </View>
   )
 

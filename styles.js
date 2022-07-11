@@ -15,5 +15,11 @@ export default StyleSheet.create({
 
     address: {
         fontWeight: 'bold',
+    },
+
+    mapView: {
+        alignSelf: "stretch",
+        height: 450,
+        margin: 30,
     }
 })
