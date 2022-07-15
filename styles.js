@@ -21,5 +21,17 @@ export default StyleSheet.create({
         alignSelf: "stretch",
         height: 450,
         margin: 30,
-    }
+    },
+
+    hotelText: {
+        color: "#008080",
+    },
+    
+    barText: {
+        color: "8000000",
+    },
+
+    boldText: {
+        fontWeight: "bold",
+    },
 })

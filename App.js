@@ -4,79 +4,74 @@ import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 import styles from './styles';
 
-const API_KEY = "";
-const URL = `https://maps.google.com/maps/api/geocode/json?key=${API_KEY}&latlng`;
+const hotelRegion = {
+  coordinates: [
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+  ],
+
+  strokeColor: "#008080",
+  strokeWidth: 4,
+}
+
+const barRegion = {
+  coordinates: [
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+    {latitude: 1, longitude: 1},
+  ],
+
+  strokeColor: "firebrick",
+  strokeWidth: 4,
+}
+
 
 export default function App() {
-  const [address, setAddress] = useState("loading...");
-  const [longitude, setLongitude] = useState();
-  const [latitude, setLatitude] = useState();
+  const [hotelRegion, setHotelStyles] = useState([styles.hotelText, styles.boldText]);
+  const [barRegion, setBarStyles] = useState([styles.barText]);
+  const [overlays, setOverlays] = useState([hotelRegion]);
 
-  useEffect (() => {
-    function setPosition({coords: {latitude, longitude}}) {
-      setLongitude(longitude);
-      setLatitude(latitude);
-      fetch(`${URL}${latitude}${longitude}`)
-        .then((resp) => resp.json())
-        .then(({results}) => {
-          if(result.length > 0) {
-            setAddress(results[0].formatted_address);
-          }
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    }
+  function onClickhotel() {
+    setHotelStyles([...hotelStyles, styles.boldText]);
+    setBarStyles([barStyles[0]]);
+    setOverlays([hotelRegion]);
+  }
 
-    let watcher;
+  function onClickbar() {
+    setHotelStyles([...barStyles, styles.boldText]);
+    setBarStyles([hotelStyles[0]]);
+    setOverlays([barRegion]);
+  }
 
-    (async () => {
-      let {status} = await Location.requestBackgroundPermissionsAsync();
-
-      if(status != "granted") {
-        serErrorMsg("Permision denied");
-        return; 
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setPosition(location);
-
-
-      watcher = await Location.watchPositionAsync(
-        {accuracy: Location.LocationAccuracy.Highest},
-      );
-    })();
-
-    return () => {
-      watcher?.remove();
-    };
-
-  }, []);
 
   return (
-    <View style={styles.constainer}>
-      <MapView 
-        style={styles.mapView} 
-        showsUserLocation 
-        followsUserLocation 
-      >
-        <MapView.Marker
-          title = "Uniat"
-          description= "Sin examen prro"
-          coordinate={{
-            latitude: 20.65182244959703,
-            longitude: -103.40273564506012
-          }}
-        />
-                <MapView.Marker
-          title = "Plaza del sol"
-          description= "A comer tacos"
-          coordinate={{
-            latitude: 20.651233074240217,
-            longitude: -103.40177509132712
-          }}
-        />
+    <View style={styles.container}>
+      <View>
+        <Text style={hotelStyles} onPress={onClickhotel}>
+          Hoteles y Restaurantes
+        </Text>
+
+        <Text style={barStyles} onPress={onClickbar}>
+          Hoteles y Restaurantes
+        </Text>
+      </View>
+
+      <MapView>
+        {overlays.map((v, i) => (
+          <MapView.Polygon 
+            key={i}
+            coordinates={v.coordinates}
+            strokeColor={v.strokeColor}
+            strokeWidth={v.strokeWidth}
+          />
+        ))}
       </MapView>
+
     </View>
   )
 
