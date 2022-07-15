@@ -61,7 +61,17 @@ export default function App() {
         </Text>
       </View>
 
-      <MapView style={styles.mapView}>
+      <MapView 
+        style={styles.mapView}
+        
+        initialRegion={{
+          latitude: 20.672747278747842,
+          longitude: -103.37539720734652,
+
+          latitudeDelta: 0.002,
+          longitudeDelta: 0.02,
+        }}
+      >
         {overlays.map((v, i) => (
           <MapView.Polygon 
             key={i}
