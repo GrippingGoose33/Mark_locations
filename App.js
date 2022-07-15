@@ -61,7 +61,7 @@ export default function App() {
         </Text>
       </View>
 
-      <MapView>
+      <MapView style={styles.mapView}>
         {overlays.map((v, i) => (
           <MapView.Polygon 
             key={i}
