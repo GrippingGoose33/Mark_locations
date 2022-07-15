@@ -55,10 +55,28 @@ export default function App() {
 
   return (
     <View style={styles.constainer}>
-      <Text style={styles.label}>Address: {address}</Text>
-      <Text style={styles.label}>Latitude: {latitude}</Text>
-      <Text style={styles.label}>Longitude: {longitude}</Text>
-      <MapView style={styles.mapView} showsUserLocation followsUserLocation />
+      <MapView 
+        style={styles.mapView} 
+        showsUserLocation 
+        followsUserLocation 
+      >
+        <MapView.Marker
+          title = "Uniat"
+          description= "Sin examen prro"
+          coordinate={{
+            latitude: 20.65182244959703,
+            longitude: -103.40273564506012
+          }}
+        />
+                <MapView.Marker
+          title = "Plaza del sol"
+          description= "A comer tacos"
+          coordinate={{
+            latitude: 20.651233074240217,
+            longitude: -103.40177509132712
+          }}
+        />
+      </MapView>
     </View>
   )
 
